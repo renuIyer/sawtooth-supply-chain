@@ -53,7 +53,7 @@ const Dashboard = {
           m('.header.text-center.mb-4',
           m('em',
             'Powered by ',
-            m('strong', 'Hyperledger Sawtooth')))
+            m('strong', 'Hyperledger Sawtooth!')))
          ]
   }
 }
