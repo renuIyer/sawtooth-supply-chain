@@ -26,8 +26,8 @@ const Dashboard = {
         m('h1.mb-3', 'Zion'),
         m('h5',
           m('em',
-            'Powered by ',
-            m('strong', 'Sawtooth Supply Chain')))),
+            'Providing Load Tracking Solutions'
+           ))),
       m('.blurb',
         m('p',
           m('em', 'Zion'),
@@ -49,7 +49,11 @@ const Dashboard = {
           'location. You will be able to authorize other participants on the ',
           'blockchain to track this data as well, or even transfer ',
           'ownership or possession of the loads entirely.')
-          )
+          ),
+          m('.header.text-center.mb-4',
+          m('em',
+            'Powered by ',
+            m('strong', 'Hyperledger Sawtooth')))
          ]
   }
 }
