@@ -24,7 +24,8 @@ const m = require('mithril')
 const Navbar = {
   view (vnode) {
     return m('nav.navbar.navbar-expand-sm.navbar-dark.bg-dark.mb-5', [
-      m('a.navbar-brand[href="/"]', { oncreate: m.route.link }, 'ZionTrackers'),
+      m('a.navbar-brand[href="/"]', { oncreate: m.route.link }, 
+      m('img',{src : '/images/zion_logo.png', height : '40px'})),
       m('button.navbar-toggler', {
         type: 'button',
         'data-toggle': 'collapse',

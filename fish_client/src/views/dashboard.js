@@ -23,7 +23,7 @@ const Dashboard = {
     return [
       m('.header.text-center.mb-4',
         m('h4', 'Welcome To'),
-        m('h1.mb-3', 'Zion'),
+        m('img', {src: '/images/zion_logo.png'}),
         m('h5',
           m('em',
             'Providing Load Tracking Solutions'
