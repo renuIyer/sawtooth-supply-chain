@@ -28,6 +28,7 @@ var _filter
 
 const FishList = {
   oninit (vnode) {
+    _filter = undefined
     let publicKey = api.getPublicKey()
     vnode.state.records = []
     vnode.state.filteredRecords = []
@@ -98,7 +99,7 @@ const _controlButtons = (vnode, publicKey) => {
         m(FilterGroup, {
           ariaLabel: 'Filter Based on Ownership',
           filters: {
-            'All': () => { vnode.state.filteredRecords = vnode.state.records },
+            'All': () => setFilter('all'),
             'Owned': () => setFilter('owned'),
             'Custodian': () => setFilter('custodian'),
             'Reporting': () => setFilter('reporting')
