@@ -23,9 +23,12 @@ const {Table, FilterGroup, PagingButtons} = require('../components/tables.js')
 const api = require('../services/api')
 
 const PAGE_SIZE = 50
+var _filter
 
 const AgentList = {
   oninit (vnode) {
+    _filter = undefined
+    let publicKey = api.getPublicKey()
     vnode.state.agents = []
     vnode.state.filteredAgents = []
     vnode.state.currentPage = 0
@@ -33,7 +36,7 @@ const AgentList = {
     const refresh = () => {
       api.get('agents').then((agents) => {
         vnode.state.agents = sortBy(agents, 'name')
-        vnode.state.filteredAgents = vnode.state.agents
+        _filterAgents(vnode, publicKey, _filter)
       })
         .then(() => { vnode.state.refreshId = setTimeout(refresh, 2000) })
     }
@@ -77,8 +80,9 @@ const AgentList = {
 
 const _controlButtons = (vnode, publicKey) => {
   if (publicKey) {
-    let filterAgents = (f) => {
-      vnode.state.filteredAgents = vnode.state.agents.filter(f)
+    let setFilter = (filter) => {
+      _filter = filter
+      _filterAgents(vnode, publicKey, filter)
     }
 
     return [
@@ -86,10 +90,10 @@ const _controlButtons = (vnode, publicKey) => {
         m(FilterGroup, {
           ariaLabel: 'Filter Based on Ownership',
           filters: {
-            'All': () => { vnode.state.filteredAgents = vnode.state.agents },
-            'Owners': () => filterAgents(agent => agent.owns.length > 0),
+            'All': () => setFilter('all'),
+            'Owners': () => setFilter('owners'),
             //'Custodians': () => filterAgents(agent => agent.custodian.length > 0),
-            'Reporters': () => filterAgents(agent => agent.reports.length > 0)
+            'Reporters': () => setFilter('reporters')
           },
           initialFilter: 'All'
         })),
@@ -108,5 +112,21 @@ const _pagingButtons = (vnode) =>
     currentPage: vnode.state.currentPage,
     maxPage: Math.floor(vnode.state.filteredAgents.length / PAGE_SIZE)
   })
+
+const _filterAgents = (vnode, publicKey, filter) => {
+  let filterCondition
+    switch(filter) {
+      case 'owners':
+        filterCondition = agent => agent.owns.length > 0
+        break;
+      case 'reporters':
+        filterCondition = agent => agent.reports.length > 0
+        break;
+    }
+    if (filterCondition && publicKey)
+      vnode.state.filteredAgents = vnode.state.agents.filter(filterCondition)
+    else 
+      vnode.state.filteredAgents = vnode.state.agents
+}
 
 module.exports = AgentList
