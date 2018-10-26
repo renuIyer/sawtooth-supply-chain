@@ -24,7 +24,7 @@ const { formatTimestamp } = require('../services/parsing')
 const {getPropertyValue, getLatestPropertyUpdateTime, getOldestPropertyUpdateTime, countPropertyUpdates} = require('../utils/records')
 
 const PAGE_SIZE = 50
-var filter
+var _filter
 
 const FishList = {
   oninit (vnode) {
@@ -40,7 +40,7 @@ const FishList = {
         vnode.state.records.sort((a, b) => {
           return getLatestPropertyUpdateTime(b) - getLatestPropertyUpdateTime(a)
         })
-        _filterRecords(vnode, publicKey, filter)
+        _filterRecords(vnode, publicKey, _filter)
       })
         .then(() => { vnode.state.refreshId = setTimeout(refresh, 5000) })
     }
@@ -88,9 +88,9 @@ const FishList = {
 
 const _controlButtons = (vnode, publicKey) => {
   if (publicKey) {
-    let setFilter = (f) => {
-      filter = f
-      _filterRecords(vnode, publicKey, f)
+    let setFilter = (filter) => {
+      _filter = filter
+      _filterRecords(vnode, publicKey, filter)
     }
 
     return [
@@ -121,10 +121,10 @@ const _pagingButtons = (vnode) =>
     maxPage: Math.floor(vnode.state.filteredRecords.length / PAGE_SIZE)
   })
 
-const _filterRecords = (vnode, publicKey, f) => {
+const _filterRecords = (vnode, publicKey, filter) => {
   if (publicKey) {
     let filterCondition
-    switch(f) {
+    switch(filter) {
       case 'owned':
         filterCondition = (record) => record.owner === publicKey
         break;
