@@ -101,7 +101,7 @@ const _controlButtons = (vnode, publicKey) => {
           filters: {
             'All': () => setFilter('all'),
             'Owned': () => setFilter('owned'),
-            'Custodian': () => setFilter('custodian'),
+            //'Custodian': () => setFilter('custodian'),
             'Reporting': () => setFilter('reporting')
           },
           initialFilter: 'All'

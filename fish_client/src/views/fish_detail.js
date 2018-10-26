@@ -442,7 +442,7 @@ const FishDetail = {
             label: 'Ownership',
             onsuccess: () => _loadData(vnode.attrs.recordId, vnode.state)
           })),
-
+/*
         _row(
           _labelProperty('Custodian', _agentLink(custodian)),
           m(TransferControl, {
@@ -452,7 +452,7 @@ const FishDetail = {
             role: 'custodian',
             label: 'Custodianship',
             onsuccess: () => _loadData(vnode.attrs.recordId, vnode.state)
-          })),
+          }))*/
 
         _row(_labelProperty('Species', getPropertyValue(record, 'species'))),
 

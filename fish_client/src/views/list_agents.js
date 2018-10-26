@@ -54,8 +54,7 @@ const AgentList = {
           headers: [
             'Name',
             'Key',
-            'Owns',
-            'Custodian',
+            'Owns',            
             'Reports'
           ],
           rows: vnode.state.filteredAgents.slice(
