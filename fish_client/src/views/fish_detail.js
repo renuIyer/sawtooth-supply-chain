@@ -37,9 +37,7 @@ const {
  */
 const authorizableProperties = [
   ['location', 'Location'],
-  ['temperature', 'Temperature'],
-  ['tilt', 'Tilt'],
-  ['shock', 'Shock']
+  ['logcount', 'LogCount'] 
 ]
 
 const _labelProperty = (label, value) => [
@@ -350,102 +348,6 @@ const ReportValue = {
   }
 }
 
-const ReportTilt = {
-  view: (vnode) => {
-    let onsuccess = vnode.attrs.onsuccess || (() => null)
-    return [
-      m('form', {
-        onsubmit: (e) => {
-          e.preventDefault()
-          _updateProperty(vnode.attrs.record, {
-            name: 'tilt',
-            stringValue: JSON.stringify({
-              x: parsing.toInt(vnode.state.x),
-              y: parsing.toInt(vnode.state.y)
-            }),
-            dataType: payloads.updateProperties.enum.STRING
-          })
-          .then(() => {
-            vnode.state.x = null
-            vnode.state.y = null
-          })
-          .then(onsuccess)
-        }
-      },
-      m('.form-row',
-        m('.col.md-4.mr-1',
-          m('input.form-control', {
-            placeholder: 'Enter X...',
-            type: 'number',
-            step: 'any',
-            oninput: m.withAttr('value', (value) => {
-              vnode.state.x = value
-            })
-          })),
-        m('.col.md-4',
-          m('input.form-control', {
-            placeholder: 'Enter Y...',
-            type: 'number',
-            step: 'any',
-            oninput: m.withAttr('value', (value) => {
-              vnode.state.y = value
-            })
-          })),
-        m('.col-2',
-          m('button.btn.btn-primary', 'Update'))))
-    ]
-  }
-}
-
-const ReportShock = {
-  view: (vnode) => {
-    let onsuccess = vnode.attrs.onsuccess || (() => null)
-    return [
-      m('form', {
-        onsubmit: (e) => {
-          e.preventDefault()
-          _updateProperty(vnode.attrs.record, {
-            name: 'shock',
-            stringValue: JSON.stringify({
-              accel: parsing.toInt(vnode.state.accel),
-              duration: parsing.toInt(vnode.state.duration)
-            }),
-            dataType: payloads.updateProperties.enum.STRING
-          })
-          .then(() => {
-            vnode.state.accel = null
-            vnode.state.duration = null
-          })
-          .then(onsuccess)
-        }
-      },
-      m('.form-row',
-        m('.col.md-4.mr-1',
-          m('input.form-control', {
-            placeholder: 'Enter Acceleration...',
-            type: 'number',
-            step: 'any',
-            min: 0,
-            oninput: m.withAttr('value', (value) => {
-              vnode.state.accel = value
-            })
-          })),
-        m('.col.md-4',
-          m('input.form-control', {
-            placeholder: 'Enter Duration...',
-            type: 'number',
-            step: 'any',
-            min: 0,
-            oninput: m.withAttr('value', (value) => {
-              vnode.state.duration = value
-            })
-          })),
-        m('.col-2',
-          m('button.btn.btn-primary', 'Update'))))
-    ]
-  }
-}
-
 const AuthorizeReporter = {
   oninit (vnode) {
     vnode.state.properties = []
@@ -569,13 +471,13 @@ const FishDetail = {
 
         _row(
           _labelProperty(
-            'Temperature',
-            _propLink(record, 'temperature', _formatTemp(getPropertyValue(record, 'temperature')))),
-          (isReporter(record, 'temperature', publicKey) && !record.final
+            'logcount',
+            _propLink(record, 'logcount', _formatTemp(getPropertyValue(record, 'logcount')))),
+          (isReporter(record, 'logcount', publicKey) && !record.final
           ? m(ReportValue,
             {
-              name: 'temperature',
-              label: 'Temperature (C°)',
+              name: 'logcount',
+              label: 'logcount',
               record,
               typeField: 'numberValue',
               type: payloads.updateProperties.enum.NUMBER,
@@ -584,29 +486,7 @@ const FishDetail = {
             })
            : null)),
 
-        _row(
-          _labelProperty(
-            'Tilt',
-            _propLink(record, 'tilt', _formatValue(record, 'tilt'))),
-          (isReporter(record, 'tilt', publicKey) && !record.final
-           ? m(ReportTilt, {
-             record,
-             onsuccess: () => _loadData(vnode.attrs.recordId, vnode.state)
-           })
-           : null)),
-
-        _row(
-          _labelProperty(
-            'Shock',
-            _propLink(record, 'shock', _formatValue(record, 'shock'))),
-          (isReporter(record, 'shock', publicKey) && !record.final
-           ? m(ReportShock, {
-             record,
-             onsuccess: () => _loadData(vnode.attrs.recordId, vnode.state)
-           })
-           : null)),
-
-        _row(m(ReporterControl, {
+              _row(m(ReporterControl, {
           record,
           publicKey,
           agents: vnode.state.agents,

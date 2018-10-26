@@ -43,27 +43,6 @@ const typedWidget = state => {
   if (property.dataType === 'NUMBER') {
     return m(LineGraphWidget, { updates: property.updates })
   }
-
-  if (property.name === 'tilt') {
-    return m(LineGraphWidget, {
-      updates: property.updates.map(update => {
-        const amplitude = Math.sqrt(update.value.x ** 2 + update.value.y ** 2)
-        return _.assign({}, update, {value: amplitude.toFixed(3)})
-      })
-    })
-  }
-
-  if (property.name === 'shock') {
-    return m(LineGraphWidget, {
-      updates: property.updates.map(update => {
-        const degree = update.value.duration === 0
-          ? 0
-          : update.value.accel / update.value.duration
-        return _.assign({}, update, {value: degree.toFixed(3)})
-      })
-    })
-  }
-
   return null
 }
 
@@ -74,8 +53,6 @@ const updateSubmitter = state => e => {
   let value = null
   if (state.update) {
     value = state.update
-  } else if (name === 'tilt' || name === 'shock') {
-    value = JSON.stringify(state.tmp)
   } else {
     value = state.tmp
   }
@@ -121,40 +98,10 @@ const typedInput = state => {
     ]
   }
 
-  if (name === 'tilt') {
-    return [
-      m('.col.md-4.mr-1',
-        m('input.form-control', {
-          placeholder: 'Enter X...',
-          oninput: withIntVal(value => { state.tmp.x = value })
-        })),
-      m('.col.md-4',
-        m('input.form-control', {
-          placeholder: 'Enter Y...',
-          oninput: withIntVal(value => { state.tmp.y = value })
-        }))
-    ]
-  }
-
-  if (name === 'shock') {
-    return [
-      m('.col.md-4.mr-1',
-        m('input.form-control', {
-          placeholder: 'Enter Acceleration...',
-          oninput: withIntVal(value => { state.tmp.accel = value })
-        })),
-      m('.col.md-4',
-        m('input.form-control', {
-          placeholder: 'Enter Duration...',
-          oninput: withIntVal(value => { state.tmp.duration = value })
-        }))
-    ]
-  }
-
-  if (name === 'temperature') {
+  if (name === 'logcount') {
     return m('.col-md-8', [
       m('input.form-control', {
-        placeholder: 'Enter Temperature...',
+        placeholder: 'Enter LogCount...',
         oninput: withIntVal(value => { state.update = value })
       })
     ])

@@ -21,9 +21,7 @@ const moment = require('moment')
 const { FLOAT_PRECISION } = require('./payloads')
 
 const STRINGIFIERS = {
-  LOCATION: v => `${v.latitude}, ${v.longitude}`,
-  tilt: v => `X: ${v.x}, Y: ${v.y}`,
-  shock: v => `Accel: ${v.accel}, Duration: ${v.duration}`,
+  LOCATION: v => `${v.latitude}, ${v.longitude}`, 
   '*': v => JSON.stringify(v, null, 1).replace(/[{}"]/g, '')
 }
 

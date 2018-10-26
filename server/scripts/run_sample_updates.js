@@ -95,25 +95,8 @@ const updateProperty = (update, oldValue) => {
 
     property.locationValue = protos.Location.create(intLoc)
 
-  } else if (property.name === 'tilt') {
-    oldValue = JSON.parse(oldValue)
-
-    const defaultTilt = { x: 0, y: 0 }
-    const newTilt = updateValue(update, oldValue || defaultTilt)
-    const intTilt = _.mapValues(newTilt, parseInt)
-
-    property.stringValue = JSON.stringify(intTilt)
-
-  } else if (property.name === 'shock') {
-    oldValue = JSON.parse(oldValue)
-
-    const defaultShock = { accel: 0, duration: 0 }
-    const newShock = updateValue(update, oldValue || defaultShock)
-    const intShock = _.mapValues(newShock, parseInt)
-
-    property.stringValue = JSON.stringify(intShock)
-
-  } else {
+  }
+  else {
     throw new Error(`Bad update in JSON: ${property.name}`)
   }
 
