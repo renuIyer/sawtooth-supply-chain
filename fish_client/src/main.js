@@ -34,6 +34,7 @@ const FishDetail = require('./views/fish_detail')
 const Dashboard = require('./views/dashboard')
 const LoginForm = require('./views/login_form')
 const PropertyDetailPage = require('./views/property_detail')
+const ProvenancePage = require('./views/fish_provenance')
 const SignupForm = require('./views/signup_form')
 
 /**
@@ -128,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     '/logout': { onmatch: logout },
     '/profile': { onmatch: profile },
     '/properties/:recordId/:name': resolve(PropertyDetailPage),
+    '/provenance/:recordId': resolve(ProvenancePage),
     '/signup': resolve(SignupForm)
   })
 })

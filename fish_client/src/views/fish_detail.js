@@ -256,6 +256,11 @@ const _propLink = (record, propName, content) =>
     { oncreate: m.route.link },
     content)
 
+const _provenanceLink = (record, content) =>
+  m(`a[href=/provenance/${record.recordId}]`,
+    { oncreate: m.route.link },
+    content)    
+
 const ReportLocation = {
   view: (vnode) => {
     let onsuccess = vnode.attrs.onsuccess || (() => null)
@@ -442,6 +447,8 @@ const FishDetail = {
             label: 'Ownership',
             onsuccess: () => _loadData(vnode.attrs.recordId, vnode.state)
           })),
+
+        _row(_labelProperty('', _provenanceLink(record, 'View Provenance'))), 
 /*
         _row(
           _labelProperty('Custodian', _agentLink(custodian)),
