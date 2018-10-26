@@ -179,6 +179,7 @@ router.post('/info/mapsApiKey', handleBody(body => {
 
 router.get('/records', handle(records.listRecords))
 router.get('/records/:recordId', handle(records.fetchRecord))
+router.get('/records/:recordId/owners', handle(records.listOwnershipHistory))
 router.get('/records/:recordId/property/:propertyName', handle(records.fetchProperty))
 router.get('/records/:recordId/:propertyName', handle(records.fetchProperty))
 

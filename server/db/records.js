@@ -197,6 +197,20 @@ const fetchPropertyQuery = (recordId, name) => block => {
   })
 }
 
+const fetchOwnerHistoryQuery = (recordId) => block => {
+  return findRecord(recordId)(block).do(record => {
+    return record('owners').map(owner => {
+      let agent = getReporter(owner('agentId'))(block)
+      return r.expr({
+        'name': agent('name'),
+        'timestamp': owner('timestamp')
+      })
+      getReporter(owner('agentId'))(block)
+      // return getReporter(owner('agentId').nth(0))(block)
+    })
+  })
+}
+
 const _loadRecord = (block, authedKey) => (record) => {
   let recordId = getRecordId(record)
   return getTypeProperties(record)(block)
@@ -262,6 +276,10 @@ const fetchRecord = (recordId, authedKey) => {
   return db.queryWithCurrentBlock(fetchRecordQuery(recordId, authedKey))
 }
 
+const listOwnershipHistory = (recordId) => {
+  return db.queryWithCurrentBlock(fetchOwnerHistoryQuery(recordId))
+}
+
 const listRecords = (authedKey, filterQuery) => {
   return db.queryWithCurrentBlock(listRecordsQuery(authedKey, filterQuery))
 }
@@ -269,5 +287,6 @@ const listRecords = (authedKey, filterQuery) => {
 module.exports = {
   fetchProperty,
   fetchRecord,
-  listRecords
+  listRecords,
+  listOwnershipHistory
 }

@@ -33,8 +33,13 @@ const listRecords = params => {
   return db.listRecords(params.authedKey, _.pick(params, FILTER_KEYS))
 }
 
+const listOwnershipHistory = ({recordId}) => {
+  return db.listOwnershipHistory(recordId)
+}
+
 module.exports = {
   fetchProperty,
   fetchRecord,
-  listRecords
+  listRecords,
+  listOwnershipHistory
 }
