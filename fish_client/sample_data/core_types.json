@@ -25,12 +25,10 @@
           "required": true
         },
         {
-          "name": "logcount",
-          "dataType": 2,
-          "required":true
-
-        }
-        
+          "name": "temperature",
+          "dataType": 3,
+          "numberExponent":-6
+        }        
     ]
   }
 ]

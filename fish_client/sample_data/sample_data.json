@@ -18,12 +18,7 @@
             "name": "weight",
             "dataType": 3,
             "numberValue": 247096000
-          },
-          {
-            "name": "logcount",
-            "dataType": 2,
-            "numberValue": 250
-          },
+          },          
           {
             "name": "location",
             "dataType": 7,
@@ -36,7 +31,7 @@
       "ownerIndex": 0,
       "custodianIndex": 2,
       "reporterIndex": 1,
-      "reportableProperties": ["location"]
+      "reportableProperties": ["temperature","location"]
     },
 
     {
@@ -57,12 +52,7 @@
             "name": "weight",
             "dataType": 3,
             "numberValue": 7826000
-          },
-          {
-            "name": "logcount",
-            "dataType": 2,
-            "numberValue": 120
-          },
+          },          
           {
             "name": "location",
             "dataType": 7,
@@ -93,12 +83,7 @@
             "name": "weight",
             "dataType": 3,
             "numberValue": 57243980000
-          },
-          {
-            "name": "logcount",
-            "dataType": 2,
-            "numberValue": 100
-          },
+          },          
           {
             "name": "location",
             "dataType": 7,

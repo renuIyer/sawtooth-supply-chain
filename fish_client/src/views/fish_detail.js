@@ -37,7 +37,7 @@ const {
  */
 const authorizableProperties = [
   ['location', 'Location'],
-  ['logcount', 'LogCount'] 
+  ['temperature', 'Temperature'],
 ]
 
 const _labelProperty = (label, value) => [
@@ -471,13 +471,13 @@ const FishDetail = {
 
         _row(
           _labelProperty(
-            'logcount',
-            _propLink(record, 'logcount', _formatTemp(getPropertyValue(record, 'logcount')))),
-          (isReporter(record, 'logcount', publicKey) && !record.final
+            'Temperature',
+            _propLink(record, 'temperature', _formatTemp(getPropertyValue(record, 'temperature')))),
+          (isReporter(record, 'temperature', publicKey) && !record.final
           ? m(ReportValue,
             {
-              name: 'logcount',
-              label: 'logcount',
+              name: 'temperature',
+              label: 'Temperature (C°)',
               record,
               typeField: 'numberValue',
               type: payloads.updateProperties.enum.NUMBER,

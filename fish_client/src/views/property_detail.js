@@ -98,10 +98,10 @@ const typedInput = state => {
     ]
   }
 
-  if (name === 'logcount') {
+  if (name === 'temperature') {
     return m('.col-md-8', [
       m('input.form-control', {
-        placeholder: 'Enter LogCount...',
+        placeholder: 'Enter Temperature...',
         oninput: withIntVal(value => { state.update = value })
       })
     ])
