@@ -123,8 +123,7 @@ const _pagingButtons = (vnode) =>
   })
 
 const _filterRecords = (vnode, publicKey, filter) => {
-  if (publicKey) {
-    let filterCondition
+  let filterCondition
     switch(filter) {
       case 'owned':
         filterCondition = (record) => record.owner === publicKey
@@ -137,11 +136,10 @@ const _filterRecords = (vnode, publicKey, filter) => {
           (owned, prop) => owned || prop.reporters.indexOf(publicKey) > -1, false)
         break;
     }
-    if (filterCondition)
+    if (filterCondition && publicKey)
       vnode.state.filteredRecords = vnode.state.records.filter(filterCondition)
     else 
       vnode.state.filteredRecords = vnode.state.records
-  }
 }
 
 module.exports = FishList
