@@ -29,7 +29,7 @@ const layout = require('../components/layout')
  */
 const authorizableProperties = [
   ['location', 'Location'],
-  ['temperature', 'Temperature'],
+  //['temperature', 'Temperature'],
 ]
 
 /**

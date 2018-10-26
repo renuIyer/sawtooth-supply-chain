@@ -98,7 +98,7 @@ const typedInput = state => {
     ]
   }
 
-  if (name === 'temperature') {
+ /* if (name === 'temperature') {
     return m('.col-md-8', [
       m('input.form-control', {
         placeholder: 'Enter Temperature...',
@@ -106,7 +106,7 @@ const typedInput = state => {
       })
     ])
   }
-
+*/
   return null
 }
 

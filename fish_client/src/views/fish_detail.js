@@ -37,7 +37,7 @@ const {
  */
 const authorizableProperties = [
   ['location', 'Location'],
-  ['temperature', 'Temperature'],
+ // ['temperature', 'Temperature'],
 ]
 
 const _labelProperty = (label, value) => [
@@ -469,7 +469,7 @@ const FishDetail = {
            ? m(ReportLocation, { record, onsuccess: () => _loadData(record.recordId, vnode.state) })
            : null)),
 
-        _row(
+        _/*row(
           _labelProperty(
             'Temperature',
             _propLink(record, 'temperature', _formatTemp(getPropertyValue(record, 'temperature')))),
@@ -484,7 +484,7 @@ const FishDetail = {
               xform: (x) => parsing.toInt(x),
               onsuccess: () => _loadData(vnode.attrs.recordId, vnode.state)
             })
-           : null)),
+           : null))*/,
 
               _row(m(ReporterControl, {
           record,
