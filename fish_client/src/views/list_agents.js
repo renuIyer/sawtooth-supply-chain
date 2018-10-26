@@ -88,7 +88,7 @@ const _controlButtons = (vnode, publicKey) => {
           filters: {
             'All': () => { vnode.state.filteredAgents = vnode.state.agents },
             'Owners': () => filterAgents(agent => agent.owns.length > 0),
-            'Custodians': () => filterAgents(agent => agent.custodian.length > 0),
+            //'Custodians': () => filterAgents(agent => agent.custodian.length > 0),
             'Reporters': () => filterAgents(agent => agent.reports.length > 0)
           },
           initialFilter: 'All'
