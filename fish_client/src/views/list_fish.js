@@ -35,7 +35,7 @@ const FishList = {
     vnode.state.currentPage = 0
 
     const refresh = () => {
-      api.get('records?recordType=fish').then((records) => {
+      api.get('records?recordType=load').then((records) => {
         vnode.state.records = records
         vnode.state.records.sort((a, b) => {
           return getLatestPropertyUpdateTime(b) - getLatestPropertyUpdateTime(a)

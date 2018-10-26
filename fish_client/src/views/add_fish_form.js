@@ -184,7 +184,7 @@ const _updateReporters = (vnode, reporterIndex) => {
 const _handleSubmit = (signingKey, state) => {
   const recordPayload = payloads.createRecord({
     recordId: state.serialNumber,
-    recordType: 'fish',
+    recordType: 'load',
     properties: [
       {
         name: 'species',
