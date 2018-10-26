@@ -24,9 +24,11 @@ const { formatTimestamp } = require('../services/parsing')
 const {getPropertyValue, getLatestPropertyUpdateTime, getOldestPropertyUpdateTime, countPropertyUpdates} = require('../utils/records')
 
 const PAGE_SIZE = 50
+var filter
 
 const FishList = {
   oninit (vnode) {
+    let publicKey = api.getPublicKey()
     vnode.state.records = []
     vnode.state.filteredRecords = []
 
@@ -38,9 +40,9 @@ const FishList = {
         vnode.state.records.sort((a, b) => {
           return getLatestPropertyUpdateTime(b) - getLatestPropertyUpdateTime(a)
         })
-        vnode.state.filteredRecords = vnode.state.records
+        _filterRecords(vnode, publicKey, filter)
       })
-        .then(() => { vnode.state.refreshId = setTimeout(refresh, 2000) })
+        .then(() => { vnode.state.refreshId = setTimeout(refresh, 5000) })
     }
 
     refresh()
@@ -86,8 +88,9 @@ const FishList = {
 
 const _controlButtons = (vnode, publicKey) => {
   if (publicKey) {
-    let filterRecords = (f) => {
-      vnode.state.filteredRecords = vnode.state.records.filter(f)
+    let setFilter = (f) => {
+      filter = f
+      _filterRecords(vnode, publicKey, f)
     }
 
     return [
@@ -96,11 +99,9 @@ const _controlButtons = (vnode, publicKey) => {
           ariaLabel: 'Filter Based on Ownership',
           filters: {
             'All': () => { vnode.state.filteredRecords = vnode.state.records },
-            'Owned': () => filterRecords((record) => record.owner === publicKey),
-            'Custodian': () => filterRecords((record) => record.custodian === publicKey),
-            'Reporting': () => filterRecords(
-              (record) => record.properties.reduce(
-                (owned, prop) => owned || prop.reporters.indexOf(publicKey) > -1, false))
+            'Owned': () => setFilter('owned'),
+            'Custodian': () => setFilter('custodian'),
+            'Reporting': () => setFilter('reporting')
           },
           initialFilter: 'All'
         })),
@@ -119,5 +120,27 @@ const _pagingButtons = (vnode) =>
     currentPage: vnode.state.currentPage,
     maxPage: Math.floor(vnode.state.filteredRecords.length / PAGE_SIZE)
   })
+
+const _filterRecords = (vnode, publicKey, f) => {
+  if (publicKey) {
+    let filterCondition
+    switch(f) {
+      case 'owned':
+        filterCondition = (record) => record.owner === publicKey
+        break;
+      case 'custodian':
+        filterCondition = (record) => record.custodian === publicKey
+        break;
+      case 'reporting':
+        filterCondition = (record) => record.properties.reduce(
+          (owned, prop) => owned || prop.reporters.indexOf(publicKey) > -1, false)
+        break;
+    }
+    if (filterCondition)
+      vnode.state.filteredRecords = vnode.state.records.filter(filterCondition)
+    else 
+      vnode.state.filteredRecords = vnode.state.records
+  }
+}
 
 module.exports = FishList
